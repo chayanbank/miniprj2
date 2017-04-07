@@ -6,7 +6,7 @@ if($_GET['refresh']==1){
 
 <html>
     <head>
-        <title>MyNotes</title>
+        <title>Note</title>
     </head>
     <body>
     <script language="JavaScript">
