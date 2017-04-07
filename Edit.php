@@ -2,23 +2,10 @@
 <?php
 include("db.php");
     $id = $_GET['id'];
-    
-    if (isset($_POST['edit'])) {
-        $idUp = $_POST['idUp'];
-        $title = $_POST['title'];
-        $content = $_POST['content'];
-        if ($title != '' && $content != '') {
-            $sql = "UPDATE note SET title='$title',content='$content' WHERE id=$idUp";
-            $conn->query($sql);
-            echo "<meta http-equiv='refresh' content='1;URL=index.php'>";
-        }else{
-            
-        }
-    }
 ?>
 <html>
 <head>
-<meta charset="utf-8">
+<meta charset="utf8">
 <title>Edit</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
@@ -28,9 +15,9 @@ include("db.php");
 <body>
     <div id="page_editNote" data-role="page">
         <div data-role="header">
-            <a data-rel="back" data-role="button" data-icon="carat-l">Back</a>
+            <a href="index.php" data-role="button" data-icon="carat-l">Back</a>
             <h2>Edit</h2>
-            <a id="btn_deleteNote" name="delete" href="del.php?submit=DEL&id=<?php echo $id; ?>" onclick="return confirm('กรุณายืนยันการลบอีกครั้ง !!!')" data-role="button" data-icon="delete">Delete</a>
+            <a id="btn_deleteNote" name="delete" href="del.php?id=<?php echo $id."&delete=1"; ?>" onclick="return confirm('กรุณายืนยันการลบอีกครั้ง !!!')" data-role="button" data-icon="delete">Delete</a>
         </div>
         <div class="ui-content">
         <?php 
@@ -38,14 +25,36 @@ include("db.php");
             mysqli_query("SET NAMES utf8");
             $result = $conn->query($query); 
         ?>
-            <form action="Edit.php" method="post">
+            <form action="del.php" method="post">
             <?php while($row = $result->fetch_array()) { ?> 
             <input type="text" id="tf_title_edit" name="title" value="<?php echo $row['title']; ?>">
             <textarea id="tf_content_edit" name="content"><?php echo $row['content']; ?></textarea>
-            <input type="hidden" name="idUp" value="<?php echo $row['id']; ?>">
+            <input type="hidden" name="idUp" value=<?php echo $row['id']; ?>>
             <?php } ?>
-            <input type="submit" id="btn_editNote" name="edit" data-role="button" value="Edit">
+            <input type="submit" id="btn_editNote" name="edit" value="Edit">
             </form>
+            <script>
+             $('#btn_editNote').on('click', function(event){
+            var valid = true,
+            errorMessage = "";
+
+            if($('#tf_title_edit').val() == ''){
+                errorMessage = "Please enter title. \n";
+                valid = false;
+            }
+            if($('#tf_content_edit').val() == ''){
+                errorMessage += "Please enter content. \n";
+                valid = false;
+            }
+            if(!valid && errorMessage.length > 0){
+                alert(errorMessage);
+                event.preventDefault();
+            }
+        });
+    </script>
+        </div>
+        <div data-role="footer" data-position="fixed">
+            <h1>นายชยันต์ สุรัตน์เรืองชัย 58160253</h1>
         </div>
     </div>
 </body>

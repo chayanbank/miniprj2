@@ -5,8 +5,8 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <title>MyNotes</title>
+    <meta charset="utf8">
+    <title>My Notes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -33,11 +33,14 @@
                     $result2 = $conn->query($query);
                     while($row = $result2->fetch_array()) {
                     ?> 
-                        <li><a href='Note.php?id=<?php echo $row['id']; ?>'><h2> <?php echo $row['title']; ?> </h2><p><?php echo $row['content']; ?></p></a>
+                        <li><a name="refresh" href="refresh.php?id=<?php echo $row['id']."&refresh=1"; ?>"><h2> <?php echo $row['title']; ?> </h2><p><?php echo $row['content']; ?></p></a>
                         <a href='Edit.php?id=<?php echo $row['id']; ?>'></a></li>
                     <?php } ?>
                 <?php } ?>
             </ul>
+        </div>
+        <div data-role="footer" data-position="fixed">
+            <h1>นายชยันต์ สุรัตน์เรืองชัย 58160253</h1>
         </div>
     </div>
 </body>
